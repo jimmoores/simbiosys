@@ -5,9 +5,9 @@ public class WorldParameters {
   private static final double TRANSFER_EFFICIENCY = 0.8d;
   private static final double ATTACK_RATIO = 1d/2d;
   private static final double ATTACK_EFFICIENCY = 0.5d;
-  private static final double ASEX_INSERT_PROBABILITY = 0.05d;
-  private static final double ASEX_MUTATE_PROBABILITY = 0.05d;
-  private static final double ASEX_DELETE_PROBABILITY = 0.05d;
+  private static final double ASEX_INSERT_PROBABILITY = 0.001d;
+  private static final double ASEX_MUTATE_PROBABILITY = 0.001d;
+  private static final double ASEX_DELETE_PROBABILITY = 0.001d;
   private static final int MAX_CHUNK_SIZE = 8;
   private static final double SEX_DELETE_PROBABILITY = 0.01d;
   private static final double SEX_MUTATE_PROBABILITY = 0.01d;
@@ -15,7 +15,15 @@ public class WorldParameters {
   private static final double ASEX_ENERGY_RATIO = 1d/3d;
   private static final double SEX_ENERGY_RATIO = 1d/3d;
   private static final double INITIAL_ENERGY_MAX = 50d;
-  private static final double BASK_DELTA = 6d;
+  private static final double BASK_DELTA_MID = 1.9d;
+  private static final double BASK_DELTA_SCALE = 1d;
+  private static final int MAX_AGE = 2000;
+  private static final long YEAR_LENGTH = 1000;
+  private long _cycleNum = 0L;
+  
+  public void setCycleNumber(long cycleNum) {
+    _cycleNum  = cycleNum;
+  }
   
   public double getTransferRatio() {
     return TRANSFER_RATIO;
@@ -60,6 +68,12 @@ public class WorldParameters {
     return INITIAL_ENERGY_MAX;
   }
   public double getBaskDelta() {
-    return BASK_DELTA;
+    long day = _cycleNum % YEAR_LENGTH;
+    double yearFraction = (double) day / (double) YEAR_LENGTH;
+    double energy = BASK_DELTA_MID + Math.sin(Math.PI * yearFraction) * BASK_DELTA_SCALE;
+    return energy;
+  }
+  public int getMaxAge() {
+    return MAX_AGE;
   }
 }

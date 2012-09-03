@@ -20,12 +20,17 @@ public class ExecutionEnvironment {
   private static Instruction[] s_dispatchTable = new Instruction[0];
   
   static void registerInstruction(Instruction instruction) {
+    instruction.setInstructionIndex(s_dispatchTableList.size());
     s_dispatchTableList.add(instruction);
     s_dispatchTable = s_dispatchTableList.toArray(s_dispatchTable);
   }
   
   public static int getNumRegisteredInstructions() {
     return s_dispatchTable.length;
+  }
+  
+  public static Instruction[] getRegisteredInstructions() {
+    return s_dispatchTable;
   }
   
   public ExecutionEnvironment(World world, Organism organism, boolean randomize) {

@@ -135,10 +135,11 @@ public class Organism {
     return _age;
   }
   
+  @SuppressWarnings("static-access")
   public void endCycle() {
     _age++;
     _energy--;
-    if (_energy <= 0.0d || _age * Math.random() < 50) {
+    if (_energy <= 0.0d || (_age * Math.random()) > getEnv().getWorld().getWorldParameters().getMaxAge()) {
       kill();
     }
   }

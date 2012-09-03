@@ -17,13 +17,13 @@ public class World {
   private WorldParameters _parameters;
   
   public World() {
+    _parameters = new WorldParameters();
     for (int y=0; y<HEIGHT; y++) {
       for (int x=0; x<WIDTH; x++) {
         _current[y][x] = new Organism(this);
       }
     }
-    _statistics = Statistics.getInstance();
-    _parameters = new WorldParameters();
+    _statistics = ChartStatistics.getInstance();
   }
   
   private void executeCycle() {
@@ -38,7 +38,9 @@ public class World {
     Collections.shuffle(allOrganisms);
     for (Point point : allOrganisms) {
       Organism o = _current[point.y][point.x];
-      executeCycle(o, point.x, point.y);
+      if (!o.isDead()) {
+        executeCycle(o, point.x, point.y);
+      }
     }
   }
   
@@ -47,7 +49,7 @@ public class World {
       for (int x=0; x<WIDTH; x++) {
         if (_current[y][x] != null) {
           Organism o = _current[y][x];
-          _statistics.analyseDNA(o.getEnv().getProgram());
+          //_statistics.analyseDNA(o.getEnv().getProgram());
           _statistics.countDNA(o.getEnv().signatureInt());
           _statistics.countEnergy(o.getEnergy());
           _statistics.countAge(o.getAge());
