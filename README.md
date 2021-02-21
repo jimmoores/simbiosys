@@ -2,6 +2,7 @@ simbiosys
 =========
 
 ![screenshot of simbiosys running on a Mac](screenshot.png)
+
 SIMulation of BIOlogical SYStem is an Artificial Life program that simulates Organisms using small virtual machines 
 driven by programs are initially random, but that evolve by mutating and recombining in an open-ended way.  Energy
 is input into the system via a 'BASK' instruction that lets the Organism increase its energy store by an amount 
